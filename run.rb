@@ -50,6 +50,7 @@ get '/account/login_text' do
 end
 
 get '/account/create' do
+  @title = "Create a new account"
   haml :create_account
 end
 

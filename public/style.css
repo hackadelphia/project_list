@@ -18,6 +18,11 @@ body {
   padding: 5px;
 }
 
+#header-left a {
+  color: #AAA;
+  text-decoration: none;
+}
+
 #header-right {
   -moz-box-shadow: 2px 2px 5px #222;
   -webkit-box-shadow: 2px 2px 5px #222;

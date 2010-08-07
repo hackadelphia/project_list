@@ -7,7 +7,8 @@
     %link{:rel => "stylesheet", :type => "text/css", :href => "/style.css"}
   %body
     #header
-      #header-left=title(@title)
+      #header-left
+        %a{:href => "/", :title => "Click to return to the home page"}=title(@title)
       #header-right
         %span#login-form-open-link=login_text
         %a#login-form-close-link{:href => "javascript:void(0)"} Close
