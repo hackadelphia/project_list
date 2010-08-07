@@ -1,14 +1,10 @@
 -- FIXME damnit, is a serial bigint or integer under the hood?
 create table users (
     id serial primary key,
-    username varchar(20),
-    password varchar,
+    username varchar(20) not null,
+    password varchar not null,
+    realname varchar(80) not null,
     UNIQUE(username)
-)
----
-create table user_profiles (
-    user_id integer primary key,
-    realname varchar(80) not null
 )
 ---
 create table user_techs (

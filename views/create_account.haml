@@ -1,0 +1,17 @@
+%form{:method => "POST"}
+  %table
+    %tr
+      %td Username
+      %td
+        %input{:type => "text", :name => "username"}
+    %tr
+      %td Real Name
+      %td
+        %input{:type => "text", :name => "realname"}
+    %tr
+      %td Password
+      %td
+        %input{:type => "password", :name => "password"}
+    %tr
+      %td{:colspan => 2}
+        %input{:style => "float: right", :type => "submit", :value => "Create Account"}
