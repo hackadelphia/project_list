@@ -19,6 +19,7 @@ body {
 }
 
 #header-right {
+  background-color: #444;
   float: right;
   border: 2px solid #AAA;
   padding: 5px;
@@ -34,6 +35,10 @@ body {
 
 #header-right a, a:visited {
   color: white;
+}
+
+#login-form-close-link {
+  float: right;
 }
 
 #mainpane {

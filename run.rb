@@ -21,7 +21,7 @@ def login_text
   return authenticated? ? 
     %Q[
       Account: #{session[:username]}
-      <a href="/account/logout" title="Click to logout">(logout)</a>
+      <a id="logout-link" href="javascript:void(0)" title="Click to logout">(logout)</a>
     ] : "Login"
 end
 
