@@ -1,6 +1,13 @@
 !!!
 %html
   %head
-    %title= "Hackadelphia Project List" + (@title ? ": #{@title}" : "")
+    %title=title(@title)     
+    %script{:type => "text/javascript", :src => "/jquery.js"}
+    %link{:rel => "stylesheet", :type => "text/css", :href => "/style.css"}
   %body
-    =yield
+    #header
+      #header-left=title(@title)
+      #header-right
+        =login_text
+    #mainpane
+      =yield

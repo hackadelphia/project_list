@@ -13,12 +13,28 @@ def login(username, password)
   session[:password] = $db.password_hash(params[:password])
 end
 
+def authenticated?
+  $db.crypt_authenticated?(session[:username], session[:password])
+end
+
+def login_text
+  return authenticated? ? 
+    %Q[
+      Account: #{session[:username]}
+      <a href="/account/logout" title="Click to logout">(logout)</a>
+    ] : "Login"
+end
+
+def title(title=nil)
+  "Hackadelphia Project List" + (title ? ": #{title}" : "")
+end
+
 configure do
   enable :sessions
 end
 
 get '/' do
-  return 'fuuuuuuuck'
+  haml :index
 end
 
 get '/account/create' do
@@ -32,7 +48,7 @@ post '/account/create' do
   redirect '/'
 end
 
-get '/account/login' do
+post '/account/login' do
   username, password = params[:username], params[:password]
   if $db.plain_authenticated?(username, password)
     login(username, password)
@@ -41,4 +57,9 @@ get '/account/login' do
   end
 
   return { :login_successful => false }.to_json 
+end
+
+get '/account/logout' do
+  [:username, :password].each { |x| session.delete(x) }
+  return { :logout_successful => true }.to_json 
 end

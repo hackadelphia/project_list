@@ -19,13 +19,16 @@ class DB
   # again with the not caring.
   #
   def plain_authenticated?(username, password)
+    return false unless username
     this_user = user(username)
-    p [this_user, username, password_hash(password)]
+    return false unless this_user
     password_hash(password) == this_user.password
   end
 
-  def crypt_authenticated?(username, crypt_passsword)
+  def crypt_authenticated?(username, crypt_password)
+    return false unless username
     this_user = user(username)
+    return false unless this_user
     crypt_password == this_user.password
   end
 
