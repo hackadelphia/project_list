@@ -1,3 +1,5 @@
+- if @error
+  .warning=@error
 %form{:method => "POST"}
   %table
     %tr
@@ -12,6 +14,10 @@
       %td Password
       %td
         %input{:type => "password", :name => "password"}
+    %tr
+      %td Confirm Password
+      %td
+        %input{:type => "password", :name => "confirm_password"}
     %tr
       %td{:colspan => 2}
         %input{:style => "float: right", :type => "submit", :value => "Create Account"}
