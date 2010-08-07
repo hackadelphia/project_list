@@ -8,14 +8,13 @@ require 'db'
 
 $db = DB.new
 
-def login(username, password)
-  session[:username] = params[:username]
-  session[:password] = $db.password_hash(params[:password])
+configure do
+  enable :sessions
 end
 
-def authenticated?
-  $db.crypt_authenticated?(session[:username], session[:password])
-end
+#
+# Helpers.
+#
 
 def login_text
   return authenticated? ? 
@@ -25,16 +24,29 @@ def login_text
     ] : "Login"
 end
 
+def login(username, password)
+  session[:username] = params[:username]
+  session[:password] = $db.password_hash(params[:password])
+end
+
+def authenticated?
+  $db.crypt_authenticated?(session[:username], session[:password])
+end
+
 def title(title=nil)
   "Hackadelphia Project List" + (title ? ": #{title}" : "")
 end
 
-configure do
-  enable :sessions
-end
+#
+# Controllers.
+#
 
 get '/' do
   haml :index
+end
+
+get '/account/login_text' do
+  return login_text
 end
 
 get '/account/create' do

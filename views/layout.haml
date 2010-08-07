@@ -12,6 +12,7 @@
         $("#login-form-open-link").click(function() {
           $("#login-form-display").show();
           $("#login-form-close-link").show();
+          $("#login-username-field").focus();
         });
 
         $("#login-form-close-link").click(function() {
@@ -27,7 +28,7 @@
             dataType: "json",
             success: function(data) {
               if(data.logout_successful) {
-                $("#login-form-open-link").text("Login");
+                $.get("/account/login_text", function(res) { $("#login-form-open-link").html(res) });
               } else {
                 alert("Error logging out. Tell erikh!");
               }
@@ -50,9 +51,9 @@
             success: function(data) { 
               if(data.login_successful) {
                 $("#login-form-close-link").click();
-                $("#login-form-open-link").text("Account: "+data.username);
+                $.get("/account/login_text", function(res) { $("#login-form-open-link").html(res) });
               } else { 
-                $("#login-form-error").html('<div style="margin: 2px; padding: 2px; text-align: center; color: black; background-color: grey; width: 100%">Invalid Login</span>');
+                $("#login-form-error").html('<div class="warning">Invalid Login</span>');
               }
             },
             error: function(xhr, ts) { alert(ts); }
@@ -74,7 +75,7 @@
               %tr
                 %td Username
                 %td
-                  %input{:type => "text", :name => "username"}
+                  %input#login-username-field{:type => "text", :name => "username"}
               %tr
                 %td Password
                 %td

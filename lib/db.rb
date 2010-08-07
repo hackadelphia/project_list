@@ -38,7 +38,7 @@ class DB
 
   def create_user(username, password, realname, *techs)
     @dbh.execute("insert into users (username, password, realname) values (?, ?, ?)", username, password_hash(password), realname)
-    this_user = @dbh.execute("select * from users where username = ?", username).as(:Struct).fetch(:first)[0]
+    this_user = @dbh.execute("select * from users where username = ?", username).fetch(:first, :Struct)
     
     raise "oh snap" unless this_user
 
