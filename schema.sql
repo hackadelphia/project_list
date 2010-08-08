@@ -11,7 +11,7 @@ create table user_techs (
     id serial primary key,
     user_id integer not null,
     -- not sure it makes sense to FK to something that's going to be so variant.
-    tech varchar(25) not null,
+    tech varchar not null,
     UNIQUE(user_id, tech)
 )
 ---
@@ -26,7 +26,15 @@ create table projects (
     user_id integer not null,
     name varchar(80) not null,
     description text not null,
+    source_code_url varchar,
     UNIQUE(name)
+)
+---
+create table project_techs (
+    id serial primary key,
+    project_id integer not null,
+    tech varchar not null,
+    UNIQUE(project_id, tech)
 )
 ---
 -- "this user is interested in this project"
