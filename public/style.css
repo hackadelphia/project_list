@@ -1,5 +1,5 @@
 body {
-  background-color: gray;
+  background-color: #888;
   padding: 0;
   margin: 0;
 }
@@ -65,19 +65,7 @@ body {
 #mainpane {
   margin-top: 20px;
   padding: 20px;
-  width: 90%;
-  margin-left: auto;
-  margin-right: auto;
-  background-color: #CCC;
-
-  -moz-border-radius-topleft: 20px;
-  -moz-border-radius-topright: 20px;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-  -moz-border-radius-bottomleft: 20px;
-  -moz-border-radius-bottomright: 20px;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
+  color: white;
 }
 
 #user_info {
@@ -102,7 +90,7 @@ body {
 }
 
 .even {
-  background-color: #666;
+  background-color: #333;
   color: white;
 }
 
