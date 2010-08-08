@@ -13,9 +13,11 @@ configure do
   enable :sessions
 end
 
+################################################################################
 #
 # Helpers.
 #
+################################################################################
 
 def login_text
   return authenticated? ? 
@@ -46,9 +48,11 @@ def e(content)
   CGI.escape(content)
 end
 
+################################################################################
 #
 # Controllers.
 #
+################################################################################
 
 get '/' do
   haml :index
@@ -60,11 +64,8 @@ end
 
 get '/account/show/:username' do
   @user = $db.user(params[:username])
-
   return 'user not found' unless @user
-  
   @techs = $db.techs(@user.id)
-
   haml :show_user
 end
 
