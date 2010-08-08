@@ -55,12 +55,21 @@ get '/account/create' do
 end
 
 post '/account/create' do
-  username, password, confirm_password, realname = params[:username], params[:password], params[:confirm_password], params[:realname]
+  username, 
+    password, 
+    confirm_password, 
+    realname,
+    techs = 
+      params[:username], 
+      params[:password], 
+      params[:confirm_password], 
+      params[:realname],
+      params[:techs].to_s.split(/\s*,\s*/)
   if password != confirm_password
     @error = "Your passwords do not match"
     haml :create_account
   else
-    $db.create_user(username, password, realname)
+    $db.create_user(username, password, realname, *techs)
     login(username, password)
     redirect '/'
   end
