@@ -1,0 +1,13 @@
+%table#user_info
+  %tr.odd
+    %td.heading Username
+    %td=h @user.username
+  %tr.even
+    %td.heading Real Name
+    %td=h @user.realname
+  %tr.odd
+    %td.heading{:style => "vertical-align: top"} Interests
+    %td
+      %ul
+        - @techs.each do |tech|
+          %li=h tech.tech

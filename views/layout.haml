@@ -5,6 +5,11 @@
     %script{:type => "text/javascript", :src => "/jquery.js"}
     %script{:type => "text/javascript", :src => "/layout.js"}
     %link{:rel => "stylesheet", :type => "text/css", :href => "/style.css"}
+    - if authenticated?
+      :javascript
+        $(document).ready(function() {
+          $("#login-form-open-link").unbind('click');
+        });
   %body
     #header
       #header-left

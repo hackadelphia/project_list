@@ -56,19 +56,19 @@ class DB
   end
 
   def techs(user_id)
-    @dbh.execute("select * from user_techs where user_id = ?", user_id).fetch(:first, :Struct)
+    @dbh.execute("select * from user_techs where user_id = ?", user_id).fetch(:all, :Struct)
   end
 
   def meetings
-    @dbh.execute("select * from meetings").fetch(:first, :Struct)
+    @dbh.execute("select * from meetings").fetch(:all, :Struct)
   end
 
   def projects
-    @dbh.execute("select * from projects").fetch(:first, :Struct)
+    @dbh.execute("select * from projects").fetch(:all, :Struct)
   end
 
   def user_projects(user_id)
-    @dbh.execute("select * from projects where user_id=?", user_id).fetch(:first, :Struct)
+    @dbh.execute("select * from projects where user_id=?", user_id).fetch(:all, :Struct)
   end
 
   def users_interested_in_project(project_id)
@@ -78,6 +78,6 @@ class DB
           inner join users u 
           on upi.user_id = u.id 
       where upi.project_id = ?],
-      project_id).fetch(:first, :Struct)
+      project_id).fetch(:all, :Struct)
   end
 end

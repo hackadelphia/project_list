@@ -3,6 +3,7 @@ $:.unshift File.join(File.expand_path(File.dirname(__FILE__)), 'lib')
 require 'sinatra'
 require 'haml'
 require 'json'
+require 'cgi'
 
 require 'db'
 
@@ -19,7 +20,7 @@ end
 def login_text
   return authenticated? ? 
     %Q[
-      Account: #{session[:username]}
+      Account: <a href="/account/show/#{e session[:username]}">#{h session[:username]}</a>
       <a class="logout-link" href="javascript:void(0)" title="Click to logout">(logout)</a>
     ] : "Login"
 end
@@ -37,12 +38,34 @@ def title(title=nil)
   "Hackadelphia Project List" + (title ? ": #{title}" : "")
 end
 
+def h(content)
+  CGI.escapeHTML(content)
+end
+
+def e(content)
+  CGI.escape(content)
+end
+
 #
 # Controllers.
 #
 
 get '/' do
   haml :index
+end
+
+#
+# Account routes
+#
+
+get '/account/show/:username' do
+  @user = $db.user(params[:username])
+
+  return 'user not found' unless @user
+  
+  @techs = $db.techs(@user.id)
+
+  haml :show_user
 end
 
 get '/account/login_text' do
