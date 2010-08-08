@@ -59,6 +59,10 @@ class DB
     @dbh.execute("select * from user_techs where user_id = ?", user_id).fetch(:all, :Struct)
   end
 
+  def create_meeting(date)
+    @dbh.execute("insert into meetings (meeting_time) values (?)", date)
+  end
+
   def meetings
     @dbh.execute("select * from meetings").fetch(:all, :Struct)
   end

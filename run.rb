@@ -114,3 +114,14 @@ get '/account/logout' do
   [:username, :password].each { |x| session.delete(x) }
   return { :logout_successful => true }.to_json 
 end
+
+#
+# Meeting Routes
+#
+
+get '/meeting' do
+end
+
+get '/meeting/:date' do
+end
+

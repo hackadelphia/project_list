@@ -17,15 +17,15 @@ create table user_techs (
 ---
 create table meetings (
     id serial primary key,
-    meeting_time date,
+    meeting_time date not null,
     UNIQUE(meeting_time)
 )
 ---
 create table projects (
     id serial primary key,
     user_id integer not null,
-    name varchar(80),
-    description text,
+    name varchar(80) not null,
+    description text not null,
     UNIQUE(name)
 )
 ---

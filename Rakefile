@@ -1,9 +1,24 @@
 $:.unshift 'lib'
 require 'connector'
+require 'db'
+gem 'highline'
+require 'highline/import'
 
 desc "Run shotgun with thin against the app"
 task :run do
   exec "shotgun -s thin run.rb"
+end
+
+task :install_gems do
+  sh 'gem install json highline sinatra thin shotgun'
+end
+
+namespace :meeting do
+  task :add do
+    date = ask("Date: ", DateTime)
+    $db = DB.new
+    $db.create_meeting(date)
+  end
 end
 
 namespace :db do
