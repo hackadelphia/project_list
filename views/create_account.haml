@@ -1,3 +1,4 @@
+%script{:src => "/tags.js", :type => "text/javascript"}
 .mainpane.center
   .bordered-box
     - if @error
@@ -23,7 +24,7 @@
         %tr
           %td Technical Interests (comma separated)
           %td
-            %input{:type => "text", :name => "techs", :size => 50}
+            %input{:class => "tech_complete", :type => "text", :name => "techs", :size => 50}
         %tr
           %td{:colspan => 2}
             %input{:style => "float: left", :type => "submit", :value => "Create Account"}

@@ -2,9 +2,11 @@
 %html
   %head
     %title=title(@title)     
-    %script{:type => "text/javascript", :src => "/jquery.js"}
-    %script{:type => "text/javascript", :src => "/layout.js"}
     %link{:rel => "stylesheet", :type => "text/css", :href => "/style.css"}
+    %link{:rel => "stylesheet", :type => "text/css", :href => "/jquery-ui.css"}
+    %script{:type => "text/javascript", :src => "/jquery.js"}
+    %script{:type => "text/javascript", :src => "/jquery-ui.js"}
+    %script{:type => "text/javascript", :src => "/layout.js"}
     - if authenticated?
       :javascript
         $(document).ready(function() {

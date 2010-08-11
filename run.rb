@@ -62,9 +62,8 @@ end
 # Ajax routes (autocompletion, etc)
 #
 
-get '/ajax/complete/tech' do
-  return '' unless params[:tech]
-  return ''
+get '/ajax/list/techs' do
+  return $db.all_techs.to_json
 end
 
 #

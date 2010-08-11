@@ -67,6 +67,10 @@ class DB
     @dbh.execute("select * from techs where tech in (" + ('?,' * techs.length).sub(/,$/, '') +")", *techs).fetch(:all, :Struct)
   end
 
+  def all_techs
+    @dbh.execute("select tech from techs").fetch(:all).flatten
+  end
+
   def user_techs(user_id)
     @dbh.execute("select t.id, t.tech from techs t inner join user_techs ut on ut.tech_id = t.id where ut.user_id = ?", user_id).fetch(:all, :Struct)
   end
