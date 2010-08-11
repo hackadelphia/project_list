@@ -1,1 +1,34 @@
-%p Some content
+.mainpane.left
+  .bordered-box
+    %span.plus [-]
+    %span.topic Project: Some Topic
+    %a.close_link{:href => "javascript:void(0)"} Close
+    .details
+      %table
+        %tr.odd
+          %td.heading Owner
+          %td Some Guy
+        %tr.even
+          %td.heading Description
+          %td This is an awesome description that you absolutely need to read.
+        %tr.odd
+          %td.heading Source Control
+          %td
+            %a{:href => "#"} http://foo.bar.example.org/git/blah/i/hate/urls
+  .bordered-box
+    %span.plus [+]
+    %span.topic Project: Some Topic
+  .bordered-box
+    %span.plus [+]
+    %span.topic Project: Some Topic
+.mainpane.right
+  .bordered-box
+    %span.plus [+]
+    %span.topic Project: Some Topic
+  .bordered-box
+    %span.plus [+]
+    %span.topic Project: Some Topic
+  .bordered-box
+    %span.plus [+]
+    %span.topic Project: Some Topic
+.clearfix

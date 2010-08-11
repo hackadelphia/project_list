@@ -23,13 +23,12 @@ body {
   text-decoration: none;
 }
 
-#header-right {
+.bordered-box {
   -moz-box-shadow: 2px 2px 5px #222;
   -webkit-box-shadow: 2px 2px 5px #222;
   box-shadow: 2px 2px 5px #222;
   cursor: pointer;
   background-color: #444;
-  float: right;
   border: 2px solid #AAA;
   padding: 5px;
   -moz-border-radius-topleft: 5px;
@@ -40,6 +39,12 @@ body {
   -moz-border-radius-bottomright: 5px;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
+  color: #AAA;
+  margin-bottom: 1em;
+}
+
+#header-right {
+  float: right;
 }
 
 #header-right a, a:visited {
@@ -62,11 +67,24 @@ body {
   width: 80%;
 }
 
-#mainpane {
+#content {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.mainpane {
+  width: 40%;
+  margin-left: auto;
+  margin-right: auto;
   margin-top: 20px;
   padding: 20px;
   color: white;
 }
+
+.left  { float: left }
+.right { float: right }
+.clearfix { clear: both }
 
 #user_info {
   width: 30%;
@@ -96,4 +114,40 @@ body {
 
 .heading {
   color: #CCC;
+}
+
+.topic {
+  color: white;
+  text-align: center;
+}
+
+.details {
+  margin-top: 1em;
+  width: 95%;
+}
+
+.details table {
+  width: 100%;
+  margin: 10px;
+  margin-left: 10px;
+  border-collapse: collapse;
+}
+
+.details td {
+  padding: 5px;
+  /*border-spacing: 0;*/
+}
+
+.details a {
+  color: white;
+}
+
+.details a:visited {
+  color: #AAA;
+}
+
+.close_link {
+  color: white;
+  text-decoration: none;
+  float: right;
 }
