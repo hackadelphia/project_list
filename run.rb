@@ -59,13 +59,22 @@ get '/' do
 end
 
 #
+# Ajax routes (autocompletion, etc)
+#
+
+get '/ajax/complete/tech' do
+  return '' unless params[:tech]
+  return ''
+end
+
+#
 # Account routes
 #
 
 get '/account/show/:username' do
   @user = $db.user(params[:username])
   return 'user not found' unless @user
-  @techs = $db.techs(@user.id)
+  @techs = $db.user_techs(@user.id)
   haml :show_user
 end
 
@@ -80,19 +89,24 @@ end
 
 post '/account/create' do
   username, 
-    password, 
-    confirm_password, 
-    realname,
-    techs = 
-      params[:username], 
-      params[:password], 
-      params[:confirm_password], 
-      params[:realname],
-      params[:techs].to_s.split(/\s*,\s*/)
+  password, 
+  confirm_password, 
+  realname,
+  techs = 
+    params[:username], 
+    params[:password], 
+    params[:confirm_password], 
+    params[:realname],
+    params[:techs].to_s.split(/\s*,\s*/)
+
   if password != confirm_password
     @error = "Your passwords do not match"
     haml :create_account
   else
+    # XXX yes, this will frequently fail. let's use our database.
+    techs.each { |tech| $db.create_tech(tech) rescue nil } 
+    techs = $db.techs(techs).map(&:id)
+
     $db.create_user(username, password, realname, *techs)
     login(username, password)
     redirect '/'

@@ -7,12 +7,17 @@ create table users (
     UNIQUE(username)
 )
 ---
+create table techs (
+    id serial primary key,
+    tech varchar not null,
+    UNIQUE(tech)
+)
+---
 create table user_techs (
     id serial primary key,
     user_id integer not null,
-    -- not sure it makes sense to FK to something that's going to be so variant.
-    tech varchar not null,
-    UNIQUE(user_id, tech)
+    tech_id integer not null,
+    UNIQUE(user_id, tech_id)
 )
 ---
 create table meetings (
@@ -33,8 +38,8 @@ create table projects (
 create table project_techs (
     id serial primary key,
     project_id integer not null,
-    tech varchar not null,
-    UNIQUE(project_id, tech)
+    tech_id integer not null,
+    UNIQUE(project_id, tech_id)
 )
 ---
 -- "this user is interested in this project"

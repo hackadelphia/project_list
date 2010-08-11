@@ -1,27 +1,29 @@
-- if @error
-  .warning=@error
-%form{:method => "POST"}
-  %table
-    %tr
-      %td Username
-      %td
-        %input{:type => "text", :name => "username"}
-    %tr
-      %td Real Name
-      %td
-        %input{:type => "text", :name => "realname"}
-    %tr
-      %td Password
-      %td
-        %input{:type => "password", :name => "password"}
-    %tr
-      %td Confirm Password
-      %td
-        %input{:type => "password", :name => "confirm_password"}
-    %tr
-      %td Technical Interests (comma separated)
-      %td
-        %input{:type => "text", :name => "techs", :size => 50}
-    %tr
-      %td{:colspan => 2}
-        %input{:style => "float: left", :type => "submit", :value => "Create Account"}
+.mainpane.center
+  .bordered-box
+    - if @error
+      .warning=@error
+    %form{:method => "POST"}
+      %table
+        %tr
+          %td Username
+          %td
+            %input{:type => "text", :name => "username"}
+        %tr
+          %td Real Name
+          %td
+            %input{:type => "text", :name => "realname"}
+        %tr
+          %td Password
+          %td
+            %input{:type => "password", :name => "password"}
+        %tr
+          %td Confirm Password
+          %td
+            %input{:type => "password", :name => "confirm_password"}
+        %tr
+          %td Technical Interests (comma separated)
+          %td
+            %input{:type => "text", :name => "techs", :size => 50}
+        %tr
+          %td{:colspan => 2}
+            %input{:style => "float: left", :type => "submit", :value => "Create Account"}

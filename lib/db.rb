@@ -42,7 +42,7 @@ class DB
     
     raise "oh snap" unless this_user
 
-    sth = @dbh.prepare("insert into user_techs (user_id, tech) values (?, ?)")
+    sth = @dbh.prepare("insert into user_techs (user_id, tech_id) values (?, ?)")
     techs.each { |tech| sth.execute(this_user.id, tech) }
     sth.finish
   end
@@ -55,8 +55,20 @@ class DB
     @dbh.execute("select * from user_profiles where user_id = ?", user_id).fetch(:first, :Struct)
   end
 
-  def techs(user_id)
-    @dbh.execute("select * from user_techs where user_id = ?", user_id).fetch(:all, :Struct)
+  def create_tech(tech)
+    @dbh.execute("insert into techs (tech) values (?)", tech)
+  end
+
+  def tech(tech)
+    @dbh.execute("select * from techs where tech = ?", tech).fetch(:first, :Struct)
+  end
+
+  def techs(techs)
+    @dbh.execute("select * from techs where tech in (" + ('?,' * techs.length).sub(/,$/, '') +")", *techs).fetch(:all, :Struct)
+  end
+
+  def user_techs(user_id)
+    @dbh.execute("select t.id, t.tech from techs t inner join user_techs ut on ut.tech_id = t.id where ut.user_id = ?", user_id).fetch(:all, :Struct)
   end
 
   def create_meeting(date)
