@@ -4,23 +4,19 @@
   - unless authenticated?
     :javascript
       $(document).ready(function() { $("#create-project").hide(); });
-  .bordered-box
-    %span.plus [-]
-    %span.topic Project: Some Topic
-    %a.close_link{:href => "javascript:void(0)"} Close
-    .details
-      %dl
-        %dt.heading Owner
-        %dd 
-          %a{:href => "#"} Some Guy
-        %dt.heading Description
-        %dd This is an awesome description that you absolutely need to read.
-        %dt.heading Source Control
-        %dd
-          %a{:href => "#"} http://foo.bar.example.org/git/blah/i/hate/urls
-  .bordered-box
-    %span.plus [+]
-    %span.topic Project: Some Topic
-  .bordered-box
-    %span.plus [+]
-    %span.topic Project: Some Topic
+  - @full_projects.each do |project|
+    .bordered-box
+      %span.plus [-]
+      %span.topic=h project.project.name
+      %a.close_link{:href => "javascript:void(0)"} Close
+      .details
+        %dl
+          %dt.heading Owner
+          %dd 
+            %a{:href => "/account/view/#{e project.user.username}"}=h project.user.realname
+          %dt.heading Description
+          %dd=h project.project.description 
+          - unless project.project.source_code_url.empty?
+            %dt.heading Source Control
+            %dd
+              %a{:href => project.project.source_code_url}=h project.project.source_code_url

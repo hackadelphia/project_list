@@ -1,6 +1,8 @@
 require 'digest/sha1'
 require 'connector'
 
+FullProject = Struct.new(:project, :user, :techs)
+
 class DB
   def initialize
     @dbh = Connector.connect
@@ -167,7 +169,12 @@ class DB
   end
 
   def projects
-    @dbh.execute("select * from projects").fetch(:all, :Struct)
+    @dbh.execute("select * from projects order by id desc").fetch(:all, :Struct).collect do |project|
+      user = user_by_id(project.user_id)
+      techs = project_techs(project.id)
+
+      FullProject.new(project, user, techs)
+    end
   end
 
   def user_projects(user_id)
