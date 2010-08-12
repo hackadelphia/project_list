@@ -1,4 +1,7 @@
 .mainpane
+  - if authenticated?
+    .bordered-box.center{:style => "text-align: center; width: 30%"}
+      %a{:href => "/project/create"} Create a New Project
   .bordered-box
     %span.plus [-]
     %span.topic Project: Some Topic
