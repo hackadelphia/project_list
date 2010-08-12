@@ -8,13 +8,13 @@
         %td.heading Real Name
         %td=h @user.realname
       %tr.odd
-        %td.heading{:style => "vertical-align: top"} Interests
+        %td.heading.top Interests
         %td
           - @techs.each do |tech|
             %div=h tech.tech
       - unless @projects.empty?
         %tr.even
-          %td.heading Projects Created
+          %td.heading.top Projects Created
           %td
             - @projects.each do |project|
               %div
