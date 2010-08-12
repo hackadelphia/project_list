@@ -12,3 +12,10 @@
         %td
           - @techs.each do |tech|
             %div=h tech.tech
+      - unless @projects.empty?
+        %tr.even
+          %td.heading Projects Created
+          %td
+            - @projects.each do |project|
+              %div
+                %a{:href => "/project/show/#{project.id}"}=h project.name

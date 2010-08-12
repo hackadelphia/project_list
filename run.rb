@@ -75,6 +75,7 @@ get '/account/show/:username' do
   @user = $db.user(params[:username])
   return 'user not found' unless @user
   @techs = $db.user_techs(@user.id)
+  @projects = $db.user_projects(@user.id)
   haml :show_user
 end
 
@@ -194,6 +195,9 @@ end
 
 get '/project/show/:project_id' do
   @project = $db.project(params[:project_id])
+
+  return 'project not found' unless @project
+
   @user    = $db.user_by_id(@project.user_id)
   @techs   = $db.project_techs(params[:project_id])
 
