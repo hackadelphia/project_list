@@ -106,6 +106,8 @@ post '/account/create' do
     @error = "Please provide a real name."
   elsif password != confirm_password
     @error = "Your passwords do not match"
+  elsif $db.user(username)
+    @error = "This username already exists."
   end
 
   if @error
@@ -157,8 +159,10 @@ post '/project/create' do
     @error = "Please provide a name"
   elsif description.empty?
     @error = "Please provide a description"
-  elsif source_code_url !~ %r!^(http|git|svn)://!
-    @error = "Please provide a valid URL (git, svn, http)"
+  elsif source_code_url !~ %r!^(https?|git|svn)://!
+    @error = "Please provide a valid URL (git, svn, http, https)"
+  elsif $db.project_by_name(name)
+    @error = "A project by this name already exists."
   elsif username.nil?
     @error = "Please log in first."
   end

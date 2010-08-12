@@ -85,6 +85,8 @@ class DB
   end
 
   def techs(techs)
+    return [] if techs.empty?
+
     @dbh.execute("select * from techs where lower(tech) in (" + 
                   ('?,' * techs.length).sub(/,$/, '') + ")", 
                   *techs.map(&:downcase)
@@ -148,6 +150,10 @@ class DB
     @dbh.execute("select * from projects where id = ?", project_id).fetch(:first, :Struct)
   end
 
+  def project_by_name(name)
+    @dbh.execute("select * from projects where name = ?", name).fetch(:first, :Struct)
+  end
+
   def project_techs(project_id)
     @dbh.execute(%q[
                   select * 
@@ -159,7 +165,6 @@ class DB
                  project_id
                 ).fetch(:all, :Struct)
   end
-      
 
   def projects
     @dbh.execute("select * from projects").fetch(:all, :Struct)
