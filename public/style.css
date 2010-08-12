@@ -123,6 +123,10 @@ body {
   color: #DDD;
 }
 
+.heading a {
+  text-decoration: none;
+}
+
 .topic {
   color: white;
   text-align: center;

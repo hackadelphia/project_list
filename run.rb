@@ -184,7 +184,7 @@ post '/project/create' do
   else
     begin
       project_id = $db.create_project(username, name, description, source_code_url, nil, *techs)
-      redirect "/project/view/#{project_id}"
+      redirect "/project/show/#{project_id}"
     rescue Exception
       @error = "Unknown Error during creation."
       haml :create_project
@@ -192,7 +192,7 @@ post '/project/create' do
   end
 end
 
-get '/project/view/:project_id' do
+get '/project/show/:project_id' do
   @project = $db.project(params[:project_id])
   @user    = $db.user_by_id(@project.user_id)
   @techs   = $db.project_techs(params[:project_id])

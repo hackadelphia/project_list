@@ -117,14 +117,6 @@ class DB
     sth.finish
   end
 
-  def create_meeting(date)
-    @dbh.execute("insert into meetings (meeting_time) values (?)", date)
-  end
-
-  def meetings
-    @dbh.execute("select * from meetings").fetch(:all, :Struct)
-  end
-
   def create_project(username, name, description, source_code_url, meeting_id, *techs)
     user = user(username)
 
@@ -169,16 +161,26 @@ class DB
   end
 
   def projects
-    @dbh.execute("select * from projects order by id desc").fetch(:all, :Struct).collect do |project|
-      user = user_by_id(project.user_id)
-      techs = project_techs(project.id)
+    @dbh.execute("select * from projects order by id desc").
+      fetch(:all, :Struct).
+        collect do |project|
+          user = user_by_id(project.user_id)
+          techs = project_techs(project.id)
 
-      FullProject.new(project, user, techs)
-    end
+          FullProject.new(project, user, techs)
+        end
   end
 
   def user_projects(user_id)
     @dbh.execute("select * from projects where user_id=?", user_id).fetch(:all, :Struct)
+  end
+  
+  def create_meeting(date)
+    @dbh.execute("insert into meetings (meeting_time) values (?)", date)
+  end
+
+  def meetings
+    @dbh.execute("select * from meetings").fetch(:all, :Struct)
   end
 
   def users_interested_in_project(project_id)

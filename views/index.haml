@@ -20,3 +20,10 @@
             %dt.heading Source Control
             %dd
               %a{:href => project.project.source_code_url}=h project.project.source_code_url
+          - unless project.techs.empty?
+            %dt.heading Technologies
+            %dd
+              - project.techs.each do |tech|
+                %div=h tech.tech
+        %div.heading.clearfix{:style => "min-height: 1.5em"}
+          %a.right{:href => "/project/show/#{project.project.id}"} View Full Project
