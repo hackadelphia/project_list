@@ -161,7 +161,12 @@ body {
   float: right;
 }
 
-dl, dd, dt, table {
+.tech {
+  width: 95%;
+  overflow: none;
+}
+
+dd, dd, dt, table {
   width: 95%;
   overflow: auto;
 }

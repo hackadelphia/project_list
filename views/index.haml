@@ -24,6 +24,6 @@
             %dt.heading Technologies
             %dd
               - project.techs.each do |tech|
-                %div=h tech.tech
+                .tech=h tech.tech
         %div.heading.clearfix{:style => "min-height: 1.5em"}
           %a.right{:href => "/project/show/#{project.project.id}"} View Full Project

@@ -17,5 +17,5 @@
           %td.heading.top Projects Created
           %td
             - @projects.each do |project|
-              %div
+              .tech
                 %a{:href => "/project/show/#{project.id}"}=h project.name
