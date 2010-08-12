@@ -18,6 +18,7 @@ function bind_logout_link() {
           $.get("/account/login_text", function(res) { 
             $("#login-form-open-link").html(res);
             $("#login-form-error").html('');
+            $("#create-project").hide();
           });
           bind_open_link();
         } else {
@@ -61,6 +62,7 @@ $(document).ready(function() {
             bind_logout_link(); 
           });
           $("#login-form-open-link").unbind('click');
+          $("#create-project").show();
         } else { 
           $("#login-form-error").html('<div class="warning">Invalid Login</span>');
         }

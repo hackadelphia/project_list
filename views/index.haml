@@ -1,7 +1,9 @@
 .mainpane
-  - if authenticated?
-    .bordered-box.center{:style => "text-align: center; width: 30%"}
-      %a{:href => "/project/create"} Create a New Project
+  #create-project.bordered-box.center{:style => "text-align: center; width: 30%"}
+    %a{:href => "/project/create"} Create a New Project
+  - unless authenticated?
+    :javascript
+      $(document).ready(function() { $("#create-project").hide(); });
   .bordered-box
     %span.plus [-]
     %span.topic Project: Some Topic
