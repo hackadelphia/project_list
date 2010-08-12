@@ -162,6 +162,8 @@ body {
 }
 
 dl, dd, dt, table {
+  margin-left: auto;
+  margin-right: auto;
   width: 90%;
   overflow: auto;
 }
