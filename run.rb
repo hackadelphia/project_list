@@ -100,10 +100,14 @@ post '/account/create' do
 
   if username.empty?
     @error = "Please provide a username"
+  elsif username.length > 20
+    @error = "Your user name is too long. Under 20 characters."
   elsif password.empty? or confirm_password.empty?
     @error = "Please provide a password and a password confirmation"
   elsif realname.empty?
     @error = "Please provide a real name."
+  elsif realname.length > 80
+    @error = "Your real name is too long. Under 80 characters."
   elsif password != confirm_password
     @error = "Your passwords do not match"
   elsif $db.user(username)
@@ -162,6 +166,8 @@ post '/project/create' do
 
   if name.empty?
     @error = "Please provide a name"
+  elsif name.length > 80
+    @error = "Your name is too long. Under 80 characters."
   elsif description.empty?
     @error = "Please provide a description"
   elsif !source_code_url.empty? and source_code_url !~ %r!^(https?|git|svn)://!
