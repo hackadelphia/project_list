@@ -159,7 +159,7 @@ post '/project/create' do
     @error = "Please provide a name"
   elsif description.empty?
     @error = "Please provide a description"
-  elsif source_code_url !~ %r!^(https?|git|svn)://!
+  elsif !source_code_url.empty? and source_code_url !~ %r!^(https?|git|svn)://!
     @error = "Please provide a valid URL (git, svn, http, https)"
   elsif $db.project_by_name(name)
     @error = "A project by this name already exists."
