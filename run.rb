@@ -98,14 +98,19 @@ post '/account/create' do
     params[:realname],
     params[:techs].to_s.split(/\s*,\s*/)
 
-  if password != confirm_password
+  if username.empty?
+    @error = "Please provide a username"
+  elsif password.empty? or confirm_password.empty?
+    @error = "Please provide a password and a password confirmation"
+  elsif realname.empty?
+    @error = "Please provide a real name."
+  elsif password != confirm_password
     @error = "Your passwords do not match"
+  end
+
+  if @error
     haml :create_account
   else
-    # XXX yes, this will frequently fail. let's use our database.
-    techs.each { |tech| $db.create_tech(tech) rescue nil } 
-    techs = $db.techs(techs).map(&:id)
-
     $db.create_user(username, password, realname, *techs)
     login(username, password)
     redirect '/'
@@ -126,6 +131,48 @@ end
 get '/account/logout' do
   [:username, :password].each { |x| session.delete(x) }
   return { :logout_successful => true }.to_json 
+end
+
+#
+# Project Routes
+#
+
+get '/project/create' do
+  haml :create_project
+end
+
+post '/project/create' do
+  username, 
+  name,
+  description,
+  source_code_url,
+  techs = 
+    session[:username], 
+    params[:name], 
+    params[:description], 
+    params[:source_code_url],
+    params[:techs].to_s.split(/\s*,\s*/)
+
+  if name.empty?
+    @error = "Please provide a name"
+  elsif description.empty?
+    @error = "Please provide a description"
+  elsif source_code_url !~ /^http/
+    @error = "Please provide a valid URL"
+  elsif username.nil?
+    @error = "Please log in first."
+  end
+
+  if @error
+    haml :create_project
+  else
+    project_id = $db.create_project(username, name, description, source_code_url, nil, *techs)
+    redirect "/project/view/#{project_id}"
+  end
+end
+
+get '/project/view/:project_id' do
+  return params[:project_id]
 end
 
 #

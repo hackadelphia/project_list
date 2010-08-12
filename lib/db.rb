@@ -53,9 +53,8 @@ class DB
     
     raise "oh snap" unless this_user
 
-    sth = @dbh.prepare("insert into user_techs (user_id, tech_id) values (?, ?)")
-    techs.each { |tech| sth.execute(this_user.id, tech) }
-    sth.finish
+    tech_ids = clobber_techs(techs)
+    relate_techs(this_user.id, tech_ids, 'user')
   end
 
   def user(username)
@@ -66,6 +65,12 @@ class DB
   def profile(user_id)
     @dbh.execute("select * from user_profiles where user_id = ?", user_id).
       fetch(:first, :Struct)
+  end
+
+  def clobber_techs(techs)
+    # XXX yes, this will frequently fail. let's use our database and its constraints.
+    techs.each { |tech| create_tech(tech) rescue nil } 
+    return techs(techs).map(&:id)
   end
 
   def create_tech(tech)
@@ -98,12 +103,43 @@ class DB
     ], user_id).fetch(:all, :Struct)
   end
 
+  def relate_techs(relation_id, tech_ids, type)
+    return unless ['user', 'project'].include?(type)
+
+    sth = @dbh.prepare("insert into #{type}_techs (#{type}_id, tech_id) values (?, ?)")
+    tech_ids.each { |tech_id| sth.execute(relation_id, tech_id) }
+    sth.finish
+  end
+
   def create_meeting(date)
     @dbh.execute("insert into meetings (meeting_time) values (?)", date)
   end
 
   def meetings
     @dbh.execute("select * from meetings").fetch(:all, :Struct)
+  end
+
+  def create_project(username, name, description, source_code_url, meeting_id, *techs)
+    user = user(username)
+
+    @dbh.execute(%q[
+                  insert into projects
+                  (user_id, name, description, source_code_url)
+                  values
+                  (?, ?, ?, ?)
+                 ],
+                 user.id,
+                 name,
+                 description,
+                 source_code_url
+                )
+
+    project_id = @dbh.execute("select id from projects where name=?", name).fetch(:first)[0]
+
+    tech_ids = clobber_techs(techs)
+    relate_techs(project_id, tech_ids, 'project')
+
+    return project_id
   end
 
   def projects
