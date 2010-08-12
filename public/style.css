@@ -43,6 +43,14 @@ body {
   margin-bottom: 1em;
 }
 
+.bordered-box a {
+  color: white;
+}
+
+.bordered-box a:visited {
+  color: #AAA;
+}
+
 #header-right {
   float: right;
 }
