@@ -43,3 +43,7 @@ namespace :db do
   desc "shorthand for init+load"
   task :reboot => [:init, :load]
 end
+
+task :pull do
+  sh "sudo chown -R erikh:erikh . && git pull && sudo chown -R projects:www . && sudo chown root:wheel ."
+end

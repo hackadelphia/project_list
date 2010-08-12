@@ -157,6 +157,6 @@ body {
   float: right;
 }
 
-dl {
+dl, table {
   width: 90%;
 }
