@@ -37,8 +37,19 @@ class DB
   end
 
   def create_user(username, password, realname, *techs)
-    @dbh.execute("insert into users (username, password, realname) values (?, ?, ?)", username, password_hash(password), realname)
-    this_user = @dbh.execute("select * from users where username = ?", username).fetch(:first, :Struct)
+    @dbh.execute(%q[
+        insert into users 
+        (username, password, realname) 
+        values 
+        (?, ?, ?)
+      ],  
+      username, 
+      password_hash(password), 
+      realname
+    )
+
+    this_user = @dbh.execute("select * from users where username = ?", username).
+      fetch(:first, :Struct)
     
     raise "oh snap" unless this_user
 
@@ -48,11 +59,13 @@ class DB
   end
 
   def user(username)
-    @dbh.execute("select * from users where username = ?", username).fetch(:first, :Struct)
+    @dbh.execute("select * from users where username = ?", username).
+      fetch(:first, :Struct)
   end
 
   def profile(user_id)
-    @dbh.execute("select * from user_profiles where user_id = ?", user_id).fetch(:first, :Struct)
+    @dbh.execute("select * from user_profiles where user_id = ?", user_id).
+      fetch(:first, :Struct)
   end
 
   def create_tech(tech)
@@ -60,11 +73,15 @@ class DB
   end
 
   def tech(tech)
-    @dbh.execute("select * from techs where tech = ?", tech).fetch(:first, :Struct)
+    @dbh.execute("select * from techs where tech = ?", tech).
+      fetch(:first, :Struct)
   end
 
   def techs(techs)
-    @dbh.execute("select * from techs where tech in (" + ('?,' * techs.length).sub(/,$/, '') +")", *techs).fetch(:all, :Struct)
+    @dbh.execute("select * from techs where lower(tech) in (" + 
+                  ('?,' * techs.length).sub(/,$/, '') + ")", 
+                  *techs.map(&:downcase)
+                ).fetch(:all, :Struct)
   end
 
   def all_techs
@@ -72,7 +89,13 @@ class DB
   end
 
   def user_techs(user_id)
-    @dbh.execute("select t.id, t.tech from techs t inner join user_techs ut on ut.tech_id = t.id where ut.user_id = ?", user_id).fetch(:all, :Struct)
+    @dbh.execute(%q[
+      select t.id, t.tech 
+      from techs t 
+        inner join user_techs ut 
+        on ut.tech_id = t.id 
+      where ut.user_id = ?
+    ], user_id).fetch(:all, :Struct)
   end
 
   def create_meeting(date)
