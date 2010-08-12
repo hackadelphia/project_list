@@ -113,9 +113,14 @@ post '/account/create' do
   if @error
     haml :create_account
   else
-    $db.create_user(username, password, realname, *techs)
-    login(username, password)
-    redirect '/'
+    begin
+      $db.create_user(username, password, realname, *techs)
+      login(username, password)
+      redirect '/'
+    rescue Exception
+      @error = "Unknown Error during creation."
+      haml :create_account
+    end
   end
 end
 
@@ -170,8 +175,13 @@ post '/project/create' do
   if @error
     haml :create_project
   else
-    project_id = $db.create_project(username, name, description, source_code_url, nil, *techs)
-    redirect "/project/view/#{project_id}"
+    begin
+      project_id = $db.create_project(username, name, description, source_code_url, nil, *techs)
+      redirect "/project/view/#{project_id}"
+    rescue Exception
+      @error = "Unknown Error during creation."
+      haml :create_project
+    end
   end
 end
 
