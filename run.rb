@@ -157,8 +157,8 @@ post '/project/create' do
     @error = "Please provide a name"
   elsif description.empty?
     @error = "Please provide a description"
-  elsif source_code_url !~ /^http/
-    @error = "Please provide a valid URL"
+  elsif source_code_url !~ %r!^(http|git|svn)://!
+    @error = "Please provide a valid URL (git, svn, http)"
   elsif username.nil?
     @error = "Please log in first."
   end
