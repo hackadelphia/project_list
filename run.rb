@@ -172,7 +172,11 @@ post '/project/create' do
 end
 
 get '/project/view/:project_id' do
-  return params[:project_id]
+  @project = $db.project(params[:project_id])
+  @user    = $db.user_by_id(@project.user_id)
+  @techs   = $db.project_techs(params[:project_id])
+
+  haml :show_project
 end
 
 #

@@ -55,6 +55,8 @@ class DB
 
     tech_ids = clobber_techs(techs)
     relate_techs(this_user.id, tech_ids, 'user')
+
+    return this_user.id
   end
 
   def user(username)
@@ -62,8 +64,8 @@ class DB
       fetch(:first, :Struct)
   end
 
-  def profile(user_id)
-    @dbh.execute("select * from user_profiles where user_id = ?", user_id).
+  def user_by_id(user_id)
+    @dbh.execute("select * from users where id = ?", user_id).
       fetch(:first, :Struct)
   end
 
@@ -141,6 +143,23 @@ class DB
 
     return project_id
   end
+
+  def project(project_id)
+    @dbh.execute("select * from projects where id = ?", project_id).fetch(:first, :Struct)
+  end
+
+  def project_techs(project_id)
+    @dbh.execute(%q[
+                  select * 
+                  from techs t 
+                    inner join project_techs pt 
+                    on t.id = pt.tech_id 
+                  where pt.project_id = ?
+                 ], 
+                 project_id
+                ).fetch(:all, :Struct)
+  end
+      
 
   def projects
     @dbh.execute("select * from projects").fetch(:all, :Struct)

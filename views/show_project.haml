@@ -1,0 +1,18 @@
+.mainpane.center
+  .bordered-box
+    %dl.details
+      %dt.heading Project Name
+      %dd=h @project.name
+      %dt.heading Project Owner
+      %dd
+        %a{:href => "/account/show/#{@user.username}"}=h @user.realname
+      %dt.heading Description
+      %dd=h @project.description
+      - if @project.source_code_url
+        %dt.heading Source Code URL
+        %dd
+          %a{:href => @project.source_code_url}=h @project.source_code_url
+      %dt.heading{:style => "vertical-align: top"} Technologies 
+      %dd
+        - @techs.each do |tech|
+          %div=h tech.tech
