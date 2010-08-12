@@ -159,5 +159,5 @@ body {
 
 dl, dd, dt, table {
   width: 90%;
-  overflow: scroll;
+  overflow: auto;
 }
