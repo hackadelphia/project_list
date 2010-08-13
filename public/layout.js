@@ -47,7 +47,7 @@ $(document).ready(function() {
     $("#search").addClass("hand");
     $("#search").click(search_cb);
     $(this).hide();
-    return false;
+    return false; // required to make the above click cb not fire
   });
 
   $("#login-form-display").hide();
