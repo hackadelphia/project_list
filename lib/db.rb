@@ -118,6 +118,9 @@ class DB
   end
 
   def search_project_by_name_and_tech(name, techs)
+    name.gsub!(/%/, '')
+    return [] if name.empty?
+
     @dbh.execute(%q[
       select p.* 
       from techs t
