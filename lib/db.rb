@@ -171,6 +171,10 @@ class DB
         end
   end
 
+  def delete_project(project_id)
+    @dbh.execute("delete from projects where id=?", project_id)
+  end
+
   def user_projects(user_id)
     @dbh.execute("select * from projects where user_id=?", user_id).fetch(:all, :Struct)
   end

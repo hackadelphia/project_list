@@ -19,6 +19,11 @@ end
 #
 ################################################################################
 
+def project_owner?(project)
+  user = $db.user(session[:username])
+  user.id == project.user_id
+end
+
 def login_text
   return authenticated? ? 
     %Q[
@@ -202,6 +207,24 @@ get '/project/show/:project_id' do
   @techs   = $db.project_techs(params[:project_id])
 
   haml :show_project
+end
+
+get '/project/delete/:project_id' do
+  @project = $db.project(params[:project_id])
+ 
+  return 'project not found' unless @project
+  
+  unless project_owner?(@project)
+    @error = "You do not own this project."
+    @user    = $db.user_by_id(@project.user_id)
+    @techs   = $db.project_techs(params[:project_id])
+
+    haml :show_project
+  else
+    $db.delete_project(params[:project_id])
+    @error = "project '#{@project.name}' deleted"
+    redirect '/'
+  end
 end
 
 #

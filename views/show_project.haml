@@ -1,5 +1,7 @@
 .mainpane.center
   .bordered-box
+    - if @error
+      .warning=@error
     %dl.details
       %dt.heading Project Name
       %dd=h @project.name
@@ -16,3 +18,6 @@
       %dd
         - @techs.each do |tech|
           .tech=h tech.tech
+    - if project_owner?(@project)
+      %div{:style => "min-height: 1.5em"}
+        %a.right{:href => "/project/delete/#{@project.id}", :onclick => 'return confirm("Are you sure?")'} Delete This Project
