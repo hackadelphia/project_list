@@ -179,12 +179,12 @@ class DB
 
   def assign_user_to_project(project_id, username)
     this_user = user(username)
-    @dbh.execute("insert into user_projects_interested (project_id, user_id)", project_id, user.id)
+    @dbh.execute("insert into user_projects_interested (project_id, user_id) values (?, ?)", project_id, this_user.id)
   end
 
   def remove_user_from_project(project_id, username)
     this_user = user(username)
-    @dbh.execute("delete from user_projects_interested where project_id = ? and user_id = ?", project_id, user.id)
+    @dbh.execute("delete from user_projects_interested where project_id = ? and user_id = ?", project_id, this_user.id)
   end
 
   def assigned_to_project?(project_id, username)
@@ -193,13 +193,13 @@ class DB
         select true 
         from user_projects_interested 
         where project_id = ? and user_id = ?
-      ], project_id, user.id
+      ], project_id, this_user.id
     ).fetch(:first, :Struct)[0] rescue nil
   end
 
   def users_interested_in_project(project_id)
     @dbh.execute(%q[
-      select * from 
+      select u.* from 
         user_projects_interested upi 
           inner join users u 
           on upi.user_id = u.id 

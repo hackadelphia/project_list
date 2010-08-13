@@ -19,6 +19,12 @@ end
 #
 ################################################################################
 
+def assigned?(project)
+  return false unless authenticated?
+  return false unless project
+  return $db.assigned_to_project?(project.id, session[:username])
+end
+
 def project_action(project, &block)
   return 'project not found' unless project
 
@@ -34,11 +40,11 @@ def project_action(project, &block)
 end
 
 def show_project(project)
-  @project = project
-  @user    = $db.user_by_id(@project.user_id)
-  @techs   = $db.project_techs(params[:project_id])
-
-  @title   = "Project Page for '#{@project.name}'"
+  @project   = project
+  @user      = $db.user_by_id(@project.user_id)
+  @techs     = $db.project_techs(params[:project_id])
+  @assigned  = $db.users_interested_in_project(@project.id)
+  @title     = "Project Page for '#{@project.name}'"
 
   haml :show_project
 end
@@ -250,12 +256,12 @@ end
 
 get '/project/assign/:project_id' do
   @project = $db.project(params[:project_id])
-  project_action(@project) { $db.assign_user_to_project(@project, session[:username]) }
+  project_action(@project) { $db.assign_user_to_project(@project.id, session[:username]) }
 end
 
 get '/project/reject/:project_id' do
   @project = $db.project(params[:project_id])
-  project_action(@project) { $db.remove_user_to_project(@project, session[:username]) }
+  project_action(@project) { $db.remove_user_from_project(@project.id, session[:username]) }
 end
 
 #

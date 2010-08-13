@@ -14,10 +14,23 @@
         %dt.heading Source Code URL
         %dd
           %a{:href => @project.source_code_url}=h @project.source_code_url
-      %dt.heading{:style => "vertical-align: top"} Technologies 
-      %dd
-        - @techs.each do |tech|
-          .tech=h tech.tech
+      - unless @techs.empty?
+        %dt.heading Technologies 
+        %dd
+          - @techs.each do |tech|
+            .tech=h tech.tech
+      -unless @assigned.empty?
+        %dt.heading Assigned
+        %dd
+          - @assigned.each do |assigned|
+            .tech
+              %a{:href => "/account/show/#{e assigned.username}"}=h assigned.realname
     - if project_owner?(@project)
       %div{:style => "min-height: 1.5em"}
         %a.right{:href => "/project/delete/#{@project.id}", :onclick => 'return confirm("Are you sure?")'} Delete This Project
+    - if assigned?(@project)
+      %div{:style => "min-height: 1.5em"}
+        %a.right{:href => "/project/reject/#{@project.id}", :onclick => 'return confirm("Are you sure?")'} Unassign myself from this Project
+    - else
+      %div{:style => "min-height: 1.5em"}
+        %a.right{:href => "/project/assign/#{@project.id}"} Assign myself to this Project

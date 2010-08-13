@@ -121,6 +121,7 @@ body {
 
 .heading {
   color: #DDD;
+  vertical-align: top;
 }
 
 .heading a {

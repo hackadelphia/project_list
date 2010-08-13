@@ -47,7 +47,8 @@ create table user_projects_interested (
     id serial primary key,
     user_id integer not null,
     project_id integer not null,
-    meeting_id integer not null,
+    -- FIXME integrate later
+    --meeting_id integer not null,
     UNIQUE(user_id, project_id, meeting_id)
 )
 ---
