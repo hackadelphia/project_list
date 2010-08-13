@@ -210,6 +210,18 @@ class DB
   def user_projects(user_id)
     @dbh.execute("select * from projects where user_id=?", user_id).fetch(:all, :Struct)
   end
+
+  def user_project_assignments(user_id)
+    @dbh.execute(%q[
+      select p.* 
+      from user_projects_interested upi 
+        inner join projects p 
+        on p.id = upi.project_id 
+          inner join users u 
+          on u.id = upi.user_id
+      where u.id = ?], user_id
+    ).fetch(:all, :Struct)
+  end
   
   def create_meeting(date)
     @dbh.execute("insert into meetings (meeting_time) values (?)", date)

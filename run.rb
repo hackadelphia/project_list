@@ -116,6 +116,7 @@ get '/account/show/:username' do
   return 'user not found' unless @user
   @techs = $db.user_techs(@user.id)
   @projects = $db.user_projects(@user.id)
+  @assignments = $db.user_project_assignments(@user.id)
 
   @title = "User page for user: '#{@user.realname}'"
 

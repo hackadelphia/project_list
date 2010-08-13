@@ -19,3 +19,10 @@
             - @projects.each do |project|
               .tech
                 %a{:href => "/project/show/#{project.id}"}=h project.name
+      - unless @assignments.empty?
+        %tr.even
+          %td.heading.top Assigned Projects
+          %td
+            - @assignments.each do |assignment|
+              .tech
+                %a{:href => "/project/show/#{assignment.id}"}=h assignment.name
