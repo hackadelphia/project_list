@@ -18,24 +18,41 @@
     #header
       #header-left
         %a{:href => "/", :title => "Click to return to the home page"}=title(@title)
-      #header-right.bordered-box
-        %span#login-form-open-link=login_text
-        %a#login-form-close-link{:href => "javascript:void(0)"} Close
-        #login-form-display
-          #login-form-error
-          %form{:id => "login-form", :method => "POST", :action => "/account/login"}
+      #header-right
+        #search.bordered-box.hand.left
+          Search
+          %a.right.close_link{:href => "javascript:void(0)"} Close
+          %form{:id => "search-form", :method => "POST", :action => "/search"}
             %table
               %tr
-                %td Username
+                %td Search:
                 %td
-                  %input#login-username-field{:type => "text", :name => "username"}
+                  %input{:type => "text", :name => "text"}
               %tr
-                %td Password
+                %td Tech:
                 %td
-                  %input{:type => "password", :name => "password"}
-              %tr
-                %td{:colspan => 2}
-                  %input{:type => "submit", :value => "Login"}
-          %a{:style => "display: block; text-align: center", :href => "/account/create"} Create a new account
+                  %select{:name => "list"}
+                    %option Something
+                    %option Something Else
+                    %option Something Else 2
+        .bordered-box.right
+          %span#login-form-open-link=login_text
+          %a#login-form-close-link{:href => "javascript:void(0)"} Close
+          #login-form-display
+            #login-form-error
+            %form{:id => "login-form", :method => "POST", :action => "/account/login"}
+              %table
+                %tr
+                  %td Username
+                  %td
+                    %input#login-username-field{:type => "text", :name => "username"}
+                %tr
+                  %td Password
+                  %td
+                    %input{:type => "password", :name => "password"}
+                %tr
+                  %td{:colspan => 2}
+                    %input{:type => "submit", :value => "Login"}
+            %a{:style => "display: block; text-align: center", :href => "/account/create"} Create a new account
     #content
       =yield

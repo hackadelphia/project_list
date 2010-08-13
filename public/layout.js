@@ -31,7 +31,25 @@ function bind_logout_link() {
   });
 }
 
+function search_cb() {
+  $("#search").removeClass("hand");
+  $("#search-form").show();
+  $("#search").unbind("click");
+  $("#search .close_link").show();
+}
+
 $(document).ready(function() { 
+  $("#search-form").hide();
+  $("#search").click(search_cb);
+  $("#search .close_link").hide();
+  $("#search .close_link").click(function() {
+    $("#search-form").hide();
+    $("#search").addClass("hand");
+    $("#search").click(search_cb);
+    $(this).hide();
+    return false;
+  });
+
   $("#login-form-display").hide();
   $("#login-form-close-link").hide();
 
