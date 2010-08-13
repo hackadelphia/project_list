@@ -12,7 +12,7 @@ $(document).ready(function() {
   $.getJSON('/ajax/list/techs', {}, function(data) { availableTags = data });
 
   $("#search-tech, .tech_complete").autocomplete({
-    minLength: 2,
+    minLength: 1,
     source: function(request, response) {
       // delegate back to autocomplete, but extract the last term
       response($.ui.autocomplete.filter(availableTags, extractLast(request.term)));
