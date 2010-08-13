@@ -26,11 +26,11 @@
             .tech
               %a{:href => "/account/show/#{e assigned.username}"}=h assigned.realname
     - if project_owner?(@project)
-      %div{:style => "min-height: 1.5em"}
+      .bigdiv
         %a.right{:href => "/project/delete/#{@project.id}", :onclick => 'return confirm("Are you sure?")'} Delete This Project
     - if assigned?(@project)
-      %div{:style => "min-height: 1.5em"}
+      .bigdiv
         %a.right{:href => "/project/reject/#{@project.id}", :onclick => 'return confirm("Are you sure?")'} Unassign myself from this Project
     - else
-      %div{:style => "min-height: 1.5em"}
+      .bigdiv
         %a.right{:href => "/project/assign/#{@project.id}"} Assign myself to this Project

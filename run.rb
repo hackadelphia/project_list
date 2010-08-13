@@ -30,13 +30,18 @@ def project_action(project, &block)
 
   if project_owner?(project)
     @error = "You are the owner, and already assigned to this project"
+    show_project project
   elsif !authenticated?
     @error = "You need to login first."
+    show_project project
+  elsif assigned?(project) 
+    @error = "You are already assigned to this project."
+    show_project project
   else
     yield
+    redirect "/project/show/#{project.id}"
   end
  
-  show_project project
 end
 
 def show_project(project)
