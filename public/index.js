@@ -8,6 +8,7 @@ function box_selector_cb() {
   $(this).children(".plus").text("[-]");
   $(this).children(".details").show();
   $(this).children(".close-link").show();
+  $(this).removeClass('hand');
   $(this).unbind('click');
 }
 
@@ -21,6 +22,7 @@ $(document).ready(function() {
     $(this).hide();
     $(this).siblings(".details").hide();
     $(this).siblings(".plus").text("[+]");
+    $(this).parent('.bordered-box').addClass("hand");
     $(this).parent('.bordered-box').click(box_selector_cb);
     return false; // otherwise this click will trigger the above cb
   });

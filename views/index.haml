@@ -6,7 +6,7 @@
     :javascript
       $(document).ready(function() { $("#create-project").hide(); });
   - @full_projects.each do |project|
-    .bordered-box
+    .bordered-box.hand
       %span.plus [+]
       %span.topic
         =h project.project.name
