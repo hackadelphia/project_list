@@ -19,6 +19,14 @@ end
 #
 ################################################################################
 
+def show_project(project)
+  @project = project
+  @user    = $db.user_by_id(@project.user_id)
+  @techs   = $db.project_techs(params[:project_id])
+
+  haml :show_project
+end
+
 def project_owner?(project)
   user = $db.user(session[:username])
   user.id == project.user_id
@@ -203,10 +211,7 @@ get '/project/show/:project_id' do
 
   return 'project not found' unless @project
 
-  @user    = $db.user_by_id(@project.user_id)
-  @techs   = $db.project_techs(params[:project_id])
-
-  haml :show_project
+  show_project @project
 end
 
 get '/project/delete/:project_id' do
@@ -216,10 +221,7 @@ get '/project/delete/:project_id' do
   
   unless project_owner?(@project)
     @error = "You do not own this project."
-    @user    = $db.user_by_id(@project.user_id)
-    @techs   = $db.project_techs(params[:project_id])
-
-    haml :show_project
+    show_project @project
   else
     $db.delete_project(params[:project_id])
     @error = "project '#{@project.name}' deleted"
