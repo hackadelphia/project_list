@@ -1,13 +1,14 @@
-$(document).ready(function() {
-  function split(val) {
-    return val.split(/\s*,\s*/);
-  }
+// XXX with exception to the ajax call that gets the items, ripped wholesale from jquery ui docs.
 
-  function extractLast(term) {
-    return split(term).pop();
-  }
-  
-  // XXX with exception to the ajax call that gets the items, ripped wholesale from jquery ui docs.
+function split(val) {
+  return val.split(/\s*,\s*/);
+}
+
+function extractLast(term) {
+  return split(term).pop();
+}
+
+$(document).ready(function() {
   var availableTags = [];
   $.getJSON('/ajax/list/techs', {}, function(data) { availableTags = data });
 
