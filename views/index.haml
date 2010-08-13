@@ -1,3 +1,4 @@
+%script{:src => "/index.js", :type => "text/javascript"}
 .mainpane
   #create-project.bordered-box.center{:style => "text-align: center; width: 30%"}
     %a{:href => "/project/create"} Create a New Project
@@ -6,9 +7,12 @@
       $(document).ready(function() { $("#create-project").hide(); });
   - @full_projects.each do |project|
     .bordered-box
-      %span.plus [-]
-      %span.topic=h project.project.name
-      %a.close_link{:href => "javascript:void(0)"} Close
+      %span.plus [+]
+      %span.topic
+        =h project.project.name
+        by
+        =h project.user.realname
+      %span.close-link.hand Close
       .details
         %dl
           %dt.heading Owner
