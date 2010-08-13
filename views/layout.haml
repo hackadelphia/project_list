@@ -29,11 +29,14 @@
               %tr
                 %td Description:
                 %td
-                  %input{:type => "text", :name => "description"}
+                  %input{:type => "text", :name => "name"}
               %tr
                 %td Techs:
                 %td
                   %input{:id => "search-tech", :type => "text", :name => "techs"}
+              %tr
+                %td{:colspan => 2, :style => "text-align: right"}
+                  %input{:type => "submit", :value => "Search"}
         .bordered-box.right
           %span#login-form-open-link=login_text
           %a#login-form-close-link{:href => "javascript:void(0)"} Close
