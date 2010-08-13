@@ -64,7 +64,7 @@ def login_text
     %Q[
       Account: <a href="/account/show/#{e session[:username]}">#{h session[:username]}</a>
       <a class="logout-link" href="javascript:void(0)" title="Click to logout">(logout)</a>
-    ] : "Login"
+    ] : '<span class="hand">Login</span>'
 end
 
 def login(username, password)
