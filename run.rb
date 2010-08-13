@@ -19,6 +19,20 @@ end
 #
 ################################################################################
 
+def project_action(project, &block)
+  return 'project not found' unless project
+
+  if project_owner?(project)
+    @error = "You are the owner, and already assigned to this project"
+  elsif !authenticated?
+    @error = "You need to login first."
+  else
+    yield
+  end
+ 
+  show_project project
+end
+
 def show_project(project)
   @project = project
   @user    = $db.user_by_id(@project.user_id)
@@ -232,6 +246,16 @@ get '/project/delete/:project_id' do
     @error = "project '#{@project.name}' deleted"
     redirect '/'
   end
+end
+
+get '/project/assign/:project_id' do
+  @project = $db.project(params[:project_id])
+  project_action(@project) { $db.assign_user_to_project(@project, session[:username]) }
+end
+
+get '/project/reject/:project_id' do
+  @project = $db.project(params[:project_id])
+  project_action(@project) { $db.remove_user_to_project(@project, session[:username]) }
 end
 
 #
