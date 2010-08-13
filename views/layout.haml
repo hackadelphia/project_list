@@ -9,6 +9,7 @@
     %script{:type => "text/javascript", :src => "/jquery.js"}
     %script{:type => "text/javascript", :src => "/jquery-ui.js"}
     %script{:type => "text/javascript", :src => "/layout.js"}
+    %script{:type => "text/javascript", :src => "/tags.js"}
     - if authenticated?
       :javascript
         $(document).ready(function() {
@@ -23,18 +24,16 @@
           Search
           %a.right.close_link{:href => "javascript:void(0)"} Close
           %form{:id => "search-form", :method => "POST", :action => "/search"}
+            %br
             %table
               %tr
-                %td Search:
+                %td Description:
                 %td
-                  %input{:type => "text", :name => "text"}
+                  %input{:type => "text", :name => "description"}
               %tr
-                %td Tech:
+                %td Techs:
                 %td
-                  %select{:name => "list"}
-                    %option Something
-                    %option Something Else
-                    %option Something Else 2
+                  %input{:id => "search-tech", :type => "text", :name => "techs"}
         .bordered-box.right
           %span#login-form-open-link=login_text
           %a#login-form-close-link{:href => "javascript:void(0)"} Close
