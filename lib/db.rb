@@ -173,6 +173,7 @@ class DB
 
   def delete_project(project_id)
     @dbh.execute("delete from projects where id=?", project_id)
+    @dbh.execute("delete from project_techs where project_id=?", project_id)
   end
 
   def user_projects(user_id)

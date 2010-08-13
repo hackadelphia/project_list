@@ -24,6 +24,8 @@ def show_project(project)
   @user    = $db.user_by_id(@project.user_id)
   @techs   = $db.project_techs(params[:project_id])
 
+  @title   = "Project Page for '#{@project.name}'"
+
   haml :show_project
 end
 
@@ -50,7 +52,7 @@ def authenticated?
 end
 
 def title(title=nil)
-  "Hackadelphia Project List" + (title ? ": #{title}" : "")
+  "Hackadelphia Project List" + (title ? ": #{h title}" : "")
 end
 
 def h(content)
@@ -89,6 +91,9 @@ get '/account/show/:username' do
   return 'user not found' unless @user
   @techs = $db.user_techs(@user.id)
   @projects = $db.user_projects(@user.id)
+
+  @title = "User page for user: '#{@user.realname}'"
+
   haml :show_user
 end
 
