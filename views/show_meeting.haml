@@ -1,0 +1,12 @@
+.mainpane.center
+  .bordered-box
+    %dl.details
+      %dt.heading Meeting Time
+      %dd=h @meeting.meeting_time
+      %dt.heading Projects
+      %dd
+        - @projects.each do |project|
+          %div 
+            %a{:href => "/project/show/#{project.project.id}"}=h project.project.name
+            by
+            %a{:href => "/account/show/#{project.user.username}"}=h project.user.realname

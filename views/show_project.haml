@@ -10,7 +10,7 @@
         %a{:href => "/account/show/#{@user.username}"}=h @user.realname
       %dt.heading Description
       %dd=h @project.description
-      - if @project.source_code_url
+      - unless @project.source_code_url.empty?
         %dt.heading Source Code URL
         %dd
           %a{:href => @project.source_code_url}=h @project.source_code_url
