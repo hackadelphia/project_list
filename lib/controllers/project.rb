@@ -86,9 +86,24 @@ end
 post '/project/assign_meeting' do
   meeting_id, project_id = params[:meeting_id], params[:project_id]
 
+  @project = $db.project(project_id)
+
+  return '' unless project_owner?(@project)
   return '' if meeting_id.empty? and project_id.empty?
-  return '' unless meeting = $db.meeting(meeting_id)
 
   $db.add_project_to_meeting(project_id, meeting_id) rescue nil
-  return "Meeting Assigned to #{h meeting.meeting_time}"
+
+  return assign_meeting_partial(@project)
+end
+
+get '/project/unassign_meeting/:project_id/:meeting_id' do
+  meeting_id, project_id = params[:meeting_id], params[:project_id]
+  @project = $db.project(project_id)
+
+  return '' unless project_owner?(@project)
+  return '' if meeting_id.empty? and project_id.empty?
+
+  $db.remove_project_from_meeting(project_id, meeting_id) rescue nil
+
+  redirect "/project/show/#{@project.id}"
 end

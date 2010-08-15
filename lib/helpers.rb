@@ -67,3 +67,9 @@ def e(content)
   CGI.escape(content)
 end
 
+def assign_meeting_partial(project)
+  @project  ||= project
+  @meetings   = $db.meetings_for_project(@project.id) || []
+
+  haml :assign_meeting_partial, :layout => false
+end

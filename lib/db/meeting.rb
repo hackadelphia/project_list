@@ -3,6 +3,18 @@ class DB
     @dbh.execute("insert into meetings (meeting_time) values (?)", date)
   end
 
+  def project_assigned_to_any_meeting?(project_id)
+    @dbh.execute(%q[select true from project_meeting_assignment where project_id = ?]).fetch(:first)[0] rescue nil
+  end
+
+  def project_assigned_to_meeting?(project_id, meeting_id)
+    @dbh.execute(%q[
+      select true
+      from project_meeting_assignment
+      where project_id = ? and meeting_id = ?
+    ], project_id, meeting_id).fetch(:first)[0] rescue nil
+  end
+
   def add_project_to_meeting(project_id, meeting_id)
     @dbh.execute(%q[
       insert into project_meeting_assignment 
@@ -12,6 +24,10 @@ class DB
       project_id, 
       meeting_id
     )
+  end
+
+  def remove_project_from_meeting(project_id, meeting_id)
+    @dbh.execute(%q[delete from project_meeting_assignment where project_id = ? and meeting_id = ?], project_id, meeting_id)
   end
 
   def meeting(meeting_id)
@@ -39,5 +55,17 @@ class DB
 
           FullProject.new(project, user, techs)
         end
+  end
+
+  def meetings_for_project(project_id)
+    @dbh.execute(%q[
+      select m.* 
+      from meetings m 
+        inner join project_meeting_assignment pma
+        on m.id = pma.meeting_id
+          inner join projects p
+            on p.id = pma.project_id
+      where p.id = ?
+    ], project_id).fetch(:all, :Struct)
   end
 end

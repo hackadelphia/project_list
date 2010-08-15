@@ -48,7 +48,8 @@ function meeting_cb() {
 
 function assign_meeting_cb() {
   $.post("/project/assign_meeting", { meeting_id: $(this.meeting_id).val(), project_id: $(this.project_id).val() }, function(data) {
-    $("#meeting-assignment").text(data);
+    $("#meeting-assignment").html(data);
+    $("#assign-meeting").submit(assign_meeting_cb);
   });
 
   return false;
