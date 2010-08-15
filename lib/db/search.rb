@@ -10,10 +10,10 @@ class DB
         on t.id = pt.tech_id
           inner join projects p
             on p.id = pt.project_id
-      where p.name LIKE ?
+      where lower(p.name) LIKE ?
         and lower(t.tech) in (] + 
       ('?,' * techs.length).sub(/,$/, '') + 
-      ")", "%#{name}%", *techs.map(&:downcase)
+      ")", "%#{name.downcase}%", *techs.map(&:downcase)
     ).fetch(:all, :Struct).
       collect do |project|
         user = user_by_id(project.user_id)
@@ -26,7 +26,7 @@ class DB
   def search_project_by_name(name)
     name.gsub!(/%/, '')
     return [] if name.empty?
-    @dbh.execute("select * from projects where name LIKE ?", "%#{name}%").
+    @dbh.execute("select * from projects where lower(name) LIKE ?", "%#{name.downcase}%").
       fetch(:all, :Struct).
         collect do |project|
           user = user_by_id(project.user_id)
