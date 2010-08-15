@@ -20,6 +20,12 @@
       #header-left
         %a{:href => "/", :title => "Click to return to the home page"}=title(@title)
       #header-right
+        #meeting.bordered-box.hand.left
+          Meetings
+          %a.right.close_link{:href => "javascript:void(0)"} Close
+          #meeting-list.clearfix
+            - $meetings.each do |meeting|
+              %a.meeting-link{:href => "/meeting/#{meeting.id}"}=h meeting.meeting_time
         #search.bordered-box.hand.left
           Search
           %a.right.close_link{:href => "javascript:void(0)"} Close

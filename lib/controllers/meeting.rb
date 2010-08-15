@@ -2,8 +2,5 @@
 # Meeting Routes
 #
 
-get '/meeting' do
-end
-
-get '/meeting/:date' do
+get '/meeting/:meeting_id' do
 end

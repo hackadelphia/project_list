@@ -8,6 +8,7 @@ require 'cgi'
 require 'db'
 
 $db = DB.new
+$meetings = $db.meetings
 
 configure do
   enable :sessions

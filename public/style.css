@@ -194,3 +194,19 @@ table, dl {
 .plus { 
   font-family: monospace;
 }
+
+.meeting-link {
+  width: 100%;
+  display: block;
+  text-align: center;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.meeting-wide {
+  width: 8em;
+}
+
+#meeting-list {
+  margin-top: 1em;
+}

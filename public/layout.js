@@ -38,6 +38,14 @@ function search_cb() {
   $("#search .close_link").show();
 }
 
+function meeting_cb() {
+  $("#meeting").removeClass("hand");
+  $("#meeting").addClass("meeting-wide");
+  $("#meeting-list").show();
+  $("#meeting").unbind("click");
+  $("#meeting .close_link").show();
+}
+
 $(document).ready(function() { 
   $("#search-form").hide();
   $("#search").click(search_cb);
@@ -46,6 +54,18 @@ $(document).ready(function() {
     $("#search-form").hide();
     $("#search").addClass("hand");
     $("#search").click(search_cb);
+    $(this).hide();
+    return false; // required to make the above click cb not fire
+  });
+
+  $("#meeting-list").hide();
+  $("#meeting").click(meeting_cb);
+  $("#meeting .close_link").hide();
+  $("#meeting .close_link").click(function() {
+    $("#meeting-list").hide();
+    $("#meeting").addClass("hand");
+    $("#meeting").removeClass("meeting-wide");
+    $("#meeting").click(meeting_cb);
     $(this).hide();
     return false; // required to make the above click cb not fire
   });
