@@ -28,6 +28,15 @@
     - if project_owner?(@project)
       .bigdiv
         %a.right{:href => "/project/delete/#{@project.id}", :onclick => 'return confirm("Are you sure?")'} Delete This Project
+      .bigdiv
+        #meeting-assignment.right
+          Assign to Meeting:
+          %form{:id => "assign-meeting", :style => "display: inline", :method => "POST"}
+            %input{:type => "hidden", :name => "project_id", :value => @project.id}
+            %select{:name => "meeting_id", :onchange => "$(this.form).submit(); return false;"}
+              %option{:value => ""}
+              - $meetings.each do |meeting|
+                %option{:value => meeting.id}=h meeting.meeting_time
     - if assigned?(@project)
       .bigdiv
         %a.right{:href => "/project/reject/#{@project.id}", :onclick => 'return confirm("Are you sure?")'} Unassign myself from this Project

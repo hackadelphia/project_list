@@ -29,11 +29,11 @@ post '/account/create' do
   confirm_password, 
   realname,
   techs = 
-    params[:username], 
-    params[:password], 
-    params[:confirm_password], 
-    params[:realname],
-    params[:techs].to_s.split(/\s*,\s*/)
+    params[:username].strip, 
+    params[:password].strip, 
+    params[:confirm_password].strip, 
+    params[:realname].strip,
+    params[:techs].to_s.strip.split(/\s*,\s*/)
 
   if username.empty?
     @error = "Please provide a username"

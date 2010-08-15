@@ -1,5 +1,5 @@
 class DB
-  def create_project(username, name, description, source_code_url, meeting_id, *techs)
+  def create_project(username, name, description, source_code_url, *techs)
     user = user(username)
 
     @dbh.execute(%q[

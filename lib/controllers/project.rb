@@ -11,12 +11,14 @@ post '/project/create' do
   name,
   description,
   source_code_url,
+  meeting_id,
   techs = 
     session[:username], 
-    params[:name], 
-    params[:description], 
-    params[:source_code_url],
-    params[:techs].to_s.split(/\s*,\s*/)
+    params[:name].strip, 
+    params[:description].strip, 
+    params[:source_code_url].strip,
+    params[:meeting_id].strip,
+    params[:techs].to_s.strip.split(/\s*,\s*/)
 
   if name.empty?
     @error = "Please provide a name"
@@ -36,9 +38,12 @@ post '/project/create' do
     haml :create_project
   else
     begin
-      project_id = $db.create_project(username, name, description, source_code_url, nil, *techs)
+      project_id = $db.create_project(username, name, description, source_code_url, *techs)
+      unless meeting_id.empty?
+        $db.add_project_to_meeting(project_id, meeting_id)
+      end
       redirect "/project/show/#{project_id}"
-    rescue Exception
+    rescue Exception => e
       @error = "Unknown Error during creation."
       haml :create_project
     end
@@ -78,3 +83,12 @@ get '/project/reject/:project_id' do
   project_action(@project) { $db.remove_user_from_project(@project.id, session[:username]) }
 end
 
+post '/project/assign_meeting' do
+  meeting_id, project_id = params[:meeting_id], params[:project_id]
+
+  return '' if meeting_id.empty? and project_id.empty?
+  return '' unless meeting = $db.meeting(meeting_id)
+
+  $db.add_project_to_meeting(project_id, meeting_id) rescue nil
+  return "Meeting Assigned to #{h meeting.meeting_time}"
+end

@@ -20,7 +20,13 @@
           %td Technical Interests (comma separated)
           %td
             %input{:class => "tech_complete", :type => "text", :name => "techs", :size => 50, :value => params[:techs]}
-        -# TODO meeting this is for
+        %tr
+          %td For Meeting
+          %td
+            %select{:name => "meeting_id"}
+              %option{:value => ""}
+              - $meetings.each do |meeting|
+                %option{:value => meeting.id}=h meeting.meeting_time
         %tr
           %td{:colspan => 2}
             %input{:style => "float: left", :type => "submit", :value => "Create Project"}
