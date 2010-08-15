@@ -6,7 +6,7 @@ class DB
   end
 
   def create_tech(tech)
-    @dbh.execute("insert into techs (tech) values (?)", tech)
+    @dbh.execute("insert into techs (tech) values (lower(?))", tech)
   end
 
   def tech(tech)
