@@ -14,6 +14,7 @@ task :install_gems do
 end
 
 namespace :meeting do
+  desc "Add a new meeting by inputting a date"
   task :add do
     date = ask("Date: ", DateTime)
     $db = DB.new
