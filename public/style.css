@@ -210,3 +210,7 @@ table, dl {
 #meeting-list {
   margin-top: 1em;
 }
+
+.description {
+  overflow: wrap;
+}

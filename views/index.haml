@@ -19,7 +19,7 @@
           %dd 
             %a{:href => "/account/show/#{e project.user.username}"}=h project.user.realname
           %dt.heading Description
-          %dd=h project.project.description 
+          %dd.description=h project.project.description 
           - unless project.project.source_code_url.empty?
             %dt.heading Source Control
             %dd
